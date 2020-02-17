@@ -4,19 +4,21 @@ import {Monitor} from './Monitor';
 let monitorId = 1;
 
 export const App = (props) => {
-
-  const [monitors, setMonitors] = React.useState(() => [
-      <Monitor key={monitorId++}/>,
-      <Monitor key={monitorId++}/>,
-  ]);
-
-  const addMonitor = function() {
-    setMonitors([<Monitor key={monitorId++}/>, ...monitors]);
+  const addMonitor = function(x) {
+    const newId = monitorId++;
+    return [<Monitor key={newId} id={newId}/>, ...x];
   };
+
+  const [monitors, setMonitors] = React.useState(() => {
+    let x = [];
+    x = addMonitor(x);
+    x = addMonitor(x);
+    return x;
+  });
 
   return <div className="app">
     {monitors}
-    <button onClick={addMonitor}>Add Monitor</button>
+    <button onClick={() => setMonitors(addMonitor(monitors))}>Add Monitor</button>
   </div>;
 
 };
