@@ -1,0 +1,9 @@
+h1 {
+  color: white;
+  background-color: black;
+}
+
+.monitor {
+  border: 1px solid black;
+  margin-bottom: 15px;;
+}
