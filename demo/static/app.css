@@ -2,28 +2,56 @@ h1 {
     margin: 0;
 }
 
-h2 {
-    margin: 0;
-    padding: 5px;
-    border-bottom: 1px solid #333333;
-    background: lightyellow;
+.monitors {
+    display: flex;
+    flex-flow: wrap;
 }
 
 .monitor {
     border: 1px solid black;
-    margin: 5px 0;
+    margin: 5px;
+    width: 15rem;
+    height: 15rem;
+    display: flex;
+    flex-flow: column;
+}
+
+.monitor h2 {
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px solid #333333;
+    background: lightyellow;
+    font-size: 1.2rem;
 }
 
 .monitor ul {
     overflow-y: scroll;
+    flex-grow: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
-    max-height: 8em;
+.monitor ul li {
+    border-bottom: solid gray 1px;
+    margin: 0;
+    padding: 3px;
 }
 
 .right {
     margin: 5px;
     float: right;
 }
+
+.monitor form {
+    margin: 0;
+    padding: 5px;
+    border-top: 1px solid #333333;
+    background: lightblue;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
 
 
 /*# sourceMappingURL=/app.css.map */

@@ -1018,35 +1018,42 @@ var Monitor = function Monitor(props) {
   var id = props.id,
       url = props.url;
 
-  var _React$useState = _react.default.useState(),
+  var _React$useState = _react.default.useState(1),
       _React$useState2 = _slicedToArray(_React$useState, 2),
-      name = _React$useState2[0],
-      setName = _React$useState2[1];
+      ordinal = _React$useState2[0],
+      setOrdinal = _React$useState2[1];
 
-  var _React$useState3 = _react.default.useState(function () {
+  var _React$useState3 = _react.default.useState(),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      name = _React$useState4[0],
+      setName = _React$useState4[1];
+
+  var _React$useState5 = _react.default.useState(function () {
     return new WebSocket(url);
   }),
-      _React$useState4 = _slicedToArray(_React$useState3, 2),
-      socket = _React$useState4[0],
-      setWebsocket = _React$useState4[1];
-
-  var _React$useState5 = _react.default.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
-      enabled = _React$useState6[0],
-      setEnabled = _React$useState6[1];
+      socket = _React$useState6[0],
+      setWebsocket = _React$useState6[1];
 
-  var _React$useState7 = _react.default.useState([]),
+  var _React$useState7 = _react.default.useState(false),
       _React$useState8 = _slicedToArray(_React$useState7, 2),
-      msgs = _React$useState8[0],
-      setMessages = _React$useState8[1];
+      enabled = _React$useState8[0],
+      setEnabled = _React$useState8[1];
 
-  var _React$useState9 = _react.default.useState('ping'),
+  var _React$useState9 = _react.default.useState([]),
       _React$useState10 = _slicedToArray(_React$useState9, 2),
-      text = _React$useState10[0],
-      setText = _React$useState10[1];
+      msgs = _React$useState10[0],
+      setMessages = _React$useState10[1];
+
+  var _React$useState11 = _react.default.useState('ping'),
+      _React$useState12 = _slicedToArray(_React$useState11, 2),
+      text = _React$useState12[0],
+      setText = _React$useState12[1];
 
   var addMessage = function addMessage(msg) {
-    return setMessages([msg].concat(_toConsumableArray(msgs)));
+    return setMessages(["".concat(setOrdinal(function (x) {
+      return x + 1;
+    }) | ordinal, ": ").concat(msg)].concat(_toConsumableArray(msgs)));
   };
 
   socket.onopen = function (e) {
@@ -1069,7 +1076,7 @@ var Monitor = function Monitor(props) {
       setName(uid);
     }
 
-    addMessage("".concat(uid, "#").concat(action, ": ").concat(message || ''));
+    addMessage("".concat(uid, "#").concat(action, "\n: ").concat(message || '', "\n"));
   };
 
   var onSubmit = function onSubmit(event) {
@@ -1081,19 +1088,18 @@ var Monitor = function Monitor(props) {
 
   return _react.default.createElement("div", {
     className: "monitor"
-  }, enabled ? _react.default.createElement("form", {
-    className: "right",
+  }, _react.default.createElement("h2", null, "Monitor #", id, ": ", name || '?'), _react.default.createElement("ul", null, msgs.map(function (s, i) {
+    return _react.default.createElement("li", {
+      key: i
+    }, s);
+  })), enabled ? _react.default.createElement("form", {
     onSubmit: onSubmit
   }, _react.default.createElement("input", {
     value: text,
     onChange: function onChange(e) {
       return setText(e.target.value);
     }
-  }), _react.default.createElement("button", null, "Send")) : '', _react.default.createElement("h2", null, "Monitor #", id, ": ", name || '?'), _react.default.createElement("ul", null, msgs.map(function (s, i) {
-    return _react.default.createElement("li", {
-      key: i
-    }, s);
-  })));
+  }), _react.default.createElement("button", null, "Send")) : '');
 };
 
 exports.Monitor = Monitor;
@@ -1157,7 +1163,9 @@ var App = function App(props) {
     onClick: function onClick() {
       return setMonitors(addMonitor(monitors));
     }
-  }, "Add Monitor"), monitors);
+  }, "Add Monitor"), _react.default.createElement("div", {
+    className: "monitors"
+  }, monitors));
 };
 
 exports.App = App;
