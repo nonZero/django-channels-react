@@ -1184,7 +1184,8 @@ require("./styles.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var url = "ws://".concat(window.location.host, "/ws/monitor/"); // console.log(`WEBSOCKET URL: ${url}`);
+var protocol = window.location.protocol === 'http:' ? 'ws:' : 'wss:';
+var url = "".concat(protocol, "//").concat(window.location.host, "/ws/monitor/"); // console.log(`WEBSOCKET URL: ${url}`);
 
 var mountNode = document.getElementById('app');
 
