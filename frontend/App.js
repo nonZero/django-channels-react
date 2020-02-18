@@ -21,7 +21,9 @@ export const App = (props) => {
     <button onClick={() => setMonitors(addMonitor(monitors))}>
       Add Monitor
     </button>
-    {monitors}
+    <div className="monitors">
+      {monitors}
+    </div>
   </div>;
 
 };
