@@ -17,8 +17,8 @@ export const App = (props) => {
   });
 
   return <div className="app">
-    {monitors}
     <button onClick={() => setMonitors(addMonitor(monitors))}>Add Monitor</button>
+    {monitors}
   </div>;
 
 };
