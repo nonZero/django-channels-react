@@ -10,7 +10,7 @@
 ## To install:
 
     git clone https://github.com/nonZero/django-channels-react.git
-    cd django-chanells-react
+    cd django-channels-react
     pipenv install
 
 ## To run:
