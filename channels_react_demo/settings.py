@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'channels_react_demo.wsgi.application'
+# WSGI_APPLICATION = 'channels_react_demo.wsgi.application'
 ASGI_APPLICATION = 'channels_react_demo.routing.application'
 
 # Database
