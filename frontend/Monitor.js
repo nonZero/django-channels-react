@@ -1,13 +1,12 @@
 import React from 'react';
 
-const URL = 'ws://127.0.0.1:9814/yo/';
-
 export const Monitor = (props) => {
-  const {id} = props;
+  const {id, url} = props;
   const [name, setName] = React.useState();
-  const [socket, setWebsocket] = React.useState(() => new WebSocket(URL));
+  const [socket, setWebsocket] = React.useState(() => new WebSocket(url));
   const [enabled, setEnabled] = React.useState(false);
   const [msgs, setMessages] = React.useState([]);
+  const [text, setText] = React.useState('ping');
 
   const addMessage = (msg) => setMessages([msg, ...msgs]);
 
@@ -23,22 +22,25 @@ export const Monitor = (props) => {
 
   socket.onmessage = e => {
     const data = JSON.parse(e.data);
-    const {type, uid, message} = data;
-    console.log(message);
-    if (type === 'welcome') {
+    const {action, uid, message} = data;
+    if (action === 'welcome') {
       setName(uid);
     }
-    addMessage(`${uid}#${type}: ${message || ''}`);
+    addMessage(`${uid}#${action}: ${message || ''}`);
   };
 
-  const ping = () => {
+  const onSubmit = event => {
     socket.send(JSON.stringify({
-      message: `ping from ${id}`,
+      message: text,
     }));
+    event.preventDefault();
   };
 
   return <div className="monitor">
-    {enabled ? <button onClick={ping}>Send ping</button> : ''}
+    {enabled ? <form className="right" onSubmit={onSubmit}>
+      <input value={text} onChange={e => setText(e.target.value)}/>
+      <button>Send</button>
+    </form> : ''}
     <h2>Monitor #{id}: {name || '?'}</h2>
     <ul>
       {msgs.map((s, i) => <li key={i}>
@@ -48,5 +50,3 @@ export const Monitor = (props) => {
 
   </div>;
 };
-
-

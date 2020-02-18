@@ -1,0 +1,26 @@
+h1 {
+    margin: 0;
+}
+
+h2 {
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px solid #333333;
+    background: lightyellow;
+}
+
+.monitor {
+    border: 1px solid black;
+    margin: 5px 0;
+}
+
+.monitor ul {
+    overflow-y: scroll;
+
+    max-height: 8em;
+}
+
+.right {
+    margin: 5px;
+    float: right;
+}

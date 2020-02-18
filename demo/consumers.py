@@ -16,10 +16,14 @@ class MonitorConsumer(JsonWebsocketConsumer):
     def unsubscribe(self):
         async_to_sync(self.channel_layer.group_discard)(self.GROUP_NAME, self.channel_name)
 
-    def publish(self, payload):
+    def publish(self, action, **payload):
         async_to_sync(self.channel_layer.group_send)(self.GROUP_NAME, {
             "type": f"{self.GROUP_NAME}.message",
-            "payload": payload
+            "payload": {
+                'action': action,
+                'uid': self.uid,
+                **payload,
+            }
         })
 
     def monitors_message(self, event):
@@ -33,28 +37,18 @@ class MonitorConsumer(JsonWebsocketConsumer):
         self.uid = get_random_string(6)
         logger.info(f"> Connected {self.channel_name}")
         self.accept()
-        self.publish({
-            'type': f'join',
-            'uid': self.uid,
-        })
+        self.publish('join')
         self.subscribe()
         self.send_json({
-            'type': 'welcome',
+            'action': 'welcome',
             'uid': self.uid,
         })
 
     def disconnect(self, close_code):
         logger.info(f"> Disconnected {self.uid}")
         self.unsubscribe()
-        self.publish({
-            'type': f'left',
-            'uid': self.uid,
-        })
+        self.publish('left')
 
     def receive_json(self, data):
         logger.info(f"- Recieve {self.uid}: {data!r}")
-        self.publish({
-            'type': f'ping',
-            'uid': self.uid,
-            **data,
-        })
+        self.publish('msg', **data)

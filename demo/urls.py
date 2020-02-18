@@ -5,5 +5,5 @@ from . import views
 app_name = "demo"
 
 urlpatterns = [
-    # path('yo/', views.SocketView),
+    path('', views.HomeView.as_view()),
 ]

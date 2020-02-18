@@ -14,7 +14,16 @@ h2 {
     margin: 5px 0;
 }
 
-.monitor button {
+.monitor ul {
+    overflow-y: scroll;
+
+    max-height: 8em;
+}
+
+.right {
     margin: 5px;
     float: right;
 }
+
+
+/*# sourceMappingURL=/app.css.map */

@@ -4,9 +4,10 @@ import {Monitor} from './Monitor';
 let monitorId = 1;
 
 export const App = (props) => {
+  const {url} = props;
   const addMonitor = function(x) {
     const newId = monitorId++;
-    return [<Monitor key={newId} id={newId}/>, ...x];
+    return [<Monitor key={newId} id={newId} url={url}/>, ...x];
   };
 
   const [monitors, setMonitors] = React.useState(() => {
@@ -17,10 +18,10 @@ export const App = (props) => {
   });
 
   return <div className="app">
-    <button onClick={() => setMonitors(addMonitor(monitors))}>Add Monitor</button>
+    <button onClick={() => setMonitors(addMonitor(monitors))}>
+      Add Monitor
+    </button>
     {monitors}
   </div>;
 
 };
-
-
