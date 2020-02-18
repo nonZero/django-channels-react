@@ -27,7 +27,7 @@ class MonitorConsumer(JsonWebsocketConsumer):
         })
 
     def monitors_message(self, event):
-        logger.info(f"* Event {self.channel_name}: {event!r}")
+        logger.info(f"* Event {self.uid}: {event!r}")
         payload = event.get('payload', {})
         self.send_json({
             **payload,
@@ -35,7 +35,7 @@ class MonitorConsumer(JsonWebsocketConsumer):
 
     def connect(self):
         self.uid = get_random_string(6)
-        logger.info(f"> Connected {self.channel_name}")
+        logger.info(f"> Connected {self.uid}")
         self.accept()
         self.publish('join')
         self.subscribe()
