@@ -16,7 +16,7 @@
 ## To run:
 This runs the demo from `/static/
    
-    python manage.py runserver
+    pipenv run python manage.py runserver
     
 The demo is running on <http://127.0.0.1:8000/> .
 
@@ -35,7 +35,7 @@ The demo is running on <http://127.0.0.1:8000/> .
     
 In one terminal run:
     
-    python manage.py runserver
+    pipenv run python manage.py runserver
     
 And on another one:
 
