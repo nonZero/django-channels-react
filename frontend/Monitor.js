@@ -1,5 +1,12 @@
 import React from 'react';
 
+const READY_STATES = new Map([
+  [0, 'Connecting'],
+  [1, 'Open'],
+  [2, 'Closing'],
+  [3, 'Closed'],
+]);
+
 export const Monitor = (props) => {
   const {id, url} = props;
   const [ordinal, setOrdinal] = React.useState(1);
@@ -24,15 +31,17 @@ export const Monitor = (props) => {
     setEnabled(false);
   };
 
+  socket.onerror = e => {
+    addMessage(`ERROR: ${e.target.readyState}`);
+  };
+
   socket.onmessage = e => {
     const data = JSON.parse(e.data);
     const {action, uid, message} = data;
     if (action === 'welcome') {
       setName(uid);
     }
-    addMessage(`${uid}#${action}
-: ${message || ''}
-`);
+    addMessage(`${uid}#${action}: ${message || ''}`);
   };
 
   const onSubmit = event => {
@@ -49,10 +58,15 @@ export const Monitor = (props) => {
         {s}
       </li>)}
     </ul>
-    {enabled ? <form onSubmit={onSubmit}>
-      <input value={text} onChange={e => setText(e.target.value)}/>
-      <button>Send</button>
-    </form> : ''}
+    <form onSubmit={onSubmit}>
+      {enabled ?
+          <>
+            <input value={text} onChange={e => setText(e.target.value)}/>
+            <button>Send</button>
+          </>
+          : READY_STATES.get(socket.readyState)}
+    </form>
 
   </div>;
 };
+;
